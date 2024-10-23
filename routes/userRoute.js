@@ -11,7 +11,7 @@ userRouter.post('/login', loginUser)
 userRouter.get('/get-profile', authUser, getProfile)
 userRouter.post('/update-profile', upload.single('image'), authUser, updateProfile)
 userRouter.post('/book-appointment', authUser, bookAppointment)
-userRoute.get('/appointments', authUser, listAppointment)
-userRoute.post('/cancel-appointment', authUser, cancelAppointment)
+userRouter.get('/appointments', authUser, listAppointment)
+userRouter.post('/cancel-appointment', authUser, cancelAppointment)
 
 export default userRouter

@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
       try {
 
             const {email, password} = req.body
-            const user = await userModal.findOne({email})
+            const user = await userModel.findOne({email})
 
             if(!user) {
                  return res.json({ success: false, message: "User does not exists" })     
@@ -72,7 +72,7 @@ const loginUser = async (req, res) => {
 const getProfile = async (req,res) => {
       try {
             const { userId } = req.body
-            const userData = await userModel.findById(userId).select('-password')
+            const userData = await userModel.findById(userId).select('-password');
 
             res.json({success: true, userData})
             
@@ -92,7 +92,7 @@ const updateProfile = async (req, res) => {
                   return res.json({success: false, message: "Data Missing"})
             }
 
-            await userModel.findByIdAndUpdate(userId, {name, phone, address:JSON.parse(address), dob, gender})
+            await userModel.findByIdAndUpdate(userId, { name, phone, address: JSON.parse(address), dob, gender })
             
             if(imageFile) {
                   const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type: 'image'})
@@ -124,16 +124,16 @@ const bookAppointment = async (req, res) => {
                   if(slots_booked[slotDate].includes(slotTime)) {
                         return res.json({success: false, message: "Slot not available"})
                   } else {
-                        slots_booked[slotsDate].push(slotTime)
+                        slots_booked[slotDate].push(slotTime)
                   }
             } else {
                   slots_booked[slotDate] = []
                   slots_booked[slotDate].push(slotTime)
             }
 
-            const userDate =  await userModel.findById(userId).select('-password')
+            const userData = await userModel.findById(userId).select('-password');
 
-            delete docDate.slots_booked
+            delete docData.slots_booked
 
             const appointmentData = {
                   userId,
