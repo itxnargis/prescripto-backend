@@ -15,7 +15,7 @@ const changeAvailability = async (req, res) => {
 
 const doctorList = async (req, res) => {
       try {
-            const doctors = await doctorModel.find({}).select(['-password', 'email'])
+            const doctors = await doctorModel.find({}).select(['-password', '-email'])
 
             res.json({ success: true, doctors })
       } catch (error) {
