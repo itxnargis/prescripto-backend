@@ -4,6 +4,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
 import jwt from 'jsonwebtoken'
 import appointmentModel from '../models/apointmentModel.js'
+import userModel from '../models/userModel.js'
 
 const addDoctor = async (req, res) => {
       try {
@@ -87,7 +88,7 @@ const allDoctors = async (req, res) => {
 const appointmentsAdmin = async (req, res) => {
       try {
             const appointments = await appointmentModel.find({})
-            res.json({success: true, appointments})
+            res.json({ success: true, appointments })
       } catch (error) {
             console.log(error)
             res.json({ success: false, message: error.message })
@@ -122,6 +123,28 @@ const appointmentCancel = async (req, res) => {
             console.log(error);
             res.json({ success: false, message: error.message });
       }
-   };
+};
 
-export { addDoctor, loginAdmin, allDoctors, appointmentsAdmin, appointmentCancel }
+const adminDashboard = async (req, res) => {
+      try {
+
+            const doctors = await userModel.find({})
+            const users = await userModel.find({})
+            const appointments = await appointmentModel.find({})
+
+            const dashData = {
+                  doctors: doctors.length,
+                  appointments: appointments.length,
+                  patients: users.length,
+                  latestAppointments: appointments.reverse().slice(0, 5)
+            }
+            res.json({success: true, dashData})
+
+      }
+      catch (error) {
+            console.log(error);
+            res.json({ success: false, message: error.message });
+      }
+}
+
+export { addDoctor, loginAdmin, allDoctors, appointmentsAdmin, appointmentCancel, adminDashboard }
