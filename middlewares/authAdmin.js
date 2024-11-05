@@ -11,7 +11,6 @@ const authAdmin = async (req, res, next) => {
         req.user = decoded;
 
         next();
-
     } catch (error) {
         console.error(error);
         return res.status(403).json({ success: false, message: error.message });

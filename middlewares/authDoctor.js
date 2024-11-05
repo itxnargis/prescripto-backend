@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 
-const authUser = async (req, res, next) => {
+const authDoctor = async (req, res, next) => {
     try {
-        const token = req.headers.utoken;
-        if (!token) {
+        const { dtoken } = req.headers
+        if (!dtoken) {
             return res.status(403).json({ success: false, message: "Not Authorized. Login Again" });
         }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = decoded.id
+        const decoded = jwt.verify(dtoken, process.env.JWT_SECRET);
+        req.body.docId = decoded.id
 
         next();
     } catch (error) {
@@ -17,4 +16,4 @@ const authUser = async (req, res, next) => {
     }
 }
 
-export default authUser;
+export default authDoctor;
