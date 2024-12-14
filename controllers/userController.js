@@ -190,7 +190,7 @@ const razorpayInstance = new razorpay({
 const paymentRazorpay = async (req, res) => {
       try {
             const { appointmentId } = req.body
-            const appointmentData = await appointmentId.findById(appointmentId)
+            const appointmentData = await appointmentModel.findById(appointmentId)
 
             if (!appointmentData || appointmentData.cancelled) {
                   return res.json({ success: true, message: "Appointment cancelled or not found." })
